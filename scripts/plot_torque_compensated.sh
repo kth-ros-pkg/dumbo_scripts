@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# plots torque readings from F/T sensor
+# plots gravity-compensated torque readings from F/T sensor
 
 # usage: plot_torque.sh left
 #        plot_torque.sh right

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# plots force readings from F/T sensor
+# plots gravity-compensated force readings from F/T sensor
 
 # usage: plot_force.sh left
 #        plot_force.sh right
