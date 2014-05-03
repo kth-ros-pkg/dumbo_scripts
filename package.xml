@@ -1,0 +1,17 @@
+<package>
+ <name>dumbo_scripts</name>
+  <version>0.1.0</version>
+  <description>
+    Useful scripts for plotting Dumbo's sensor signals in rqt or exporting to matlab format.
+  </description>
+  <license>BSD</license>
+
+  <url type="website">http://wiki.ros.org/dumbo_scripts</url>
+
+  <author email="fevb@kth.se">Francisco Vina</author>
+  <maintainer email="fevb@kth.se">Francisco Vina</maintainer>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+
+</package>
