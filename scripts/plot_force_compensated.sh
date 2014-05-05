@@ -9,4 +9,4 @@
 
 # parameter specifies left or right arm
 
-rqt_plot /$1_arm_ft_sensor/wrench/force/x /$1_arm_ft_sensor/ft_compensated/wrench/force/y /$1_arm_ft_sensor/wrench/force/z
+rqt_plot /$1_arm_ft_sensor/ft_compensated/wrench/force/x /$1_arm_ft_sensor/ft_compensated/wrench/force/y /$1_arm_ft_sensor/ft_compensated/wrench/force/z
