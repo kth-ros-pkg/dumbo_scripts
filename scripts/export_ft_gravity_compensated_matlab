@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-#   export_ft_compensated_matlab
+#   export_ft_gravity_compensated_matlab
 #
 #   Created on: May 3, 2014
 #   Authors:   Francisco Vina
@@ -41,9 +41,9 @@ import rosbag
 
 def exportbag(bagfile, arm):
     bag = rosbag.Bag(bagfile)
-    file = open(arm+"_arm_ft_compensated.txt","w+")
+    file = open(arm+"_arm_ft_gravity_compensated.txt","w+")
     file.write('% timestamp, fx, fy, fz, tx, ty, tz\n\n')
-    for topic, msg, t in bag.read_messages(topics=['/'+arm+'_arm_ft_sensor/ft_compensated']):
+    for topic, msg, t in bag.read_messages(topics=['/'+arm+'_arm_ft_sensor/ft_gravity_compensated']):
         # write the timestamp
         file.write(str(t))
         file.write(', ')
@@ -73,19 +73,19 @@ def main(argv):
    try:
       opts, args = getopt.getopt(argv,"h",[])
    except getopt.GetoptError:
-      print 'export_ft_compensated_matlab <bagfile> <\'left\' or \'right\' arm>'
+      print 'export_ft_gravity_compensated_matlab <bagfile> <\'left\' or \'right\' arm>'
       sys.exit(2)
    for opt, arg in opts:
       if opt == '-h':
-         print 'export_ft_compensated_matlab <bagfile> <\'left\' or \'right\' arm>'
+         print 'export_ft_gravity_compensated_matlab <bagfile> <\'left\' or \'right\' arm>'
          print 'exports gravity compensated force-torque measurements'
          print ' '
          print 'example:'
-         print 'rosrun dumbo_scripts export_ft_compensated_matlab bagfile.bag left'
+         print 'rosrun dumbo_scripts export_ft_gravity_compensated_matlab bagfile.bag left'
          sys.exit()
 
    if len(argv)!=2:
-       print 'export_ft_compensated_matlab <bagfile> <\'left\' or \'right\' arm>'
+       print 'export_ft_gravity_compensated_matlab <bagfile> <\'left\' or \'right\' arm>'
        sys.exit(2)
 
    bagfile = argv[0]
