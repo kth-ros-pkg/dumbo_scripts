@@ -68,7 +68,7 @@ def main(argv):
    for opt, arg in opts:
       if opt == '-h':
          print 'export_joint_pos_matlab <bagfile> <\'left\' or \'right\' arm>'
-         print 'exports joint positions'
+         print 'exports joint positions from /*_arm_controller/state topic'
          print ' '
          print 'example:'
          print 'rosrun dumbo_scripts export_joint_pos_matlab bagfile.bag left'

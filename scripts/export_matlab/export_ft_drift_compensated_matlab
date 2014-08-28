@@ -1,0 +1,99 @@
+#!/usr/bin/env python
+
+#
+#   export_ft_gravity_compensated_matlab
+#
+#   Created on: May 3, 2014
+#   Authors:   Francisco Vina
+#             fevb <at> kth.se 
+#
+
+#  Copyright (c) 2014, Francisco Vina, CVAP, KTH
+#    All rights reserved.
+
+#    Redistribution and use in source and binary forms, with or without
+#    modification, are permitted provided that the following conditions are met:
+#       * Redistributions of source code must retain the above copyright
+#         notice, this list of conditions and the following disclaimer.
+#       * Redistributions in binary form must reproduce the above copyright
+#         notice, this list of conditions and the following disclaimer in the
+#         documentation and/or other materials provided with the distribution.
+#       * Neither the name of KTH nor the
+#         names of its contributors may be used to endorse or promote products
+#         derived from this software without specific prior written permission.
+
+#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+#    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+#    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+#    DISCLAIMED. IN NO EVENT SHALL KTH BE LIABLE FOR ANY
+#    DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+#    (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+#    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+#    ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+#    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+#    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#
+
+import sys, getopt
+import rosbag
+
+
+def exportbag(bagfile, arm):
+    bag = rosbag.Bag(bagfile)
+    file = open(arm+"_arm_ft_drift_compensated.txt","w+")
+    file.write('% timestamp, fx, fy, fz, tx, ty, tz\n\n')
+    for topic, msg, t in bag.read_messages(topics=['/'+arm+'_arm_ft_sensor/ft_drift_compensated']):
+        # write the timestamp
+        file.write(str(t))
+        file.write(', ')
+
+        # write the force components
+        file.write(str(msg.wrench.force.x))
+        file.write(', ')
+        file.write(str(msg.wrench.force.y))
+        file.write(', ')
+        file.write(str(msg.wrench.force.z))
+        file.write(', ')
+
+        # write the torque components
+        file.write(str(msg.wrench.torque.x))
+        file.write(', ')
+        file.write(str(msg.wrench.torque.y))
+        file.write(', ')
+        file.write(str(msg.wrench.torque.z))
+
+        file.write('\n')
+
+    file.close()
+
+        
+
+def main(argv):
+   try:
+      opts, args = getopt.getopt(argv,"h",[])
+   except getopt.GetoptError:
+      print 'export_ft_drift_compensated_matlab <bagfile> <\'left\' or \'right\' arm>'
+      sys.exit(2)
+   for opt, arg in opts:
+      if opt == '-h':
+         print 'export_ft_drift_compensated_matlab <bagfile> <\'left\' or \'right\' arm>'
+         print 'exports gravity compensated force-torque measurements'
+         print ' '
+         print 'example:'
+         print 'rosrun dumbo_scripts export_ft_gravity_compensated_matlab bagfile.bag left'
+         sys.exit()
+
+   if len(argv)!=2:
+       print 'export_ft_drift_compensated_matlab <bagfile> <\'left\' or \'right\' arm>'
+       sys.exit(2)
+
+   bagfile = argv[0]
+   arm = argv[1]
+
+   exportbag(bagfile, arm)
+  
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
